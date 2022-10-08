@@ -14,8 +14,8 @@ class _BlogListPageState extends State<BlogListPage> {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        const Flexible(
+      children: const <Widget>[
+        Flexible(
           flex: 1,
           fit: FlexFit.tight,
           child: BlogSideBar(),

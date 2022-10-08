@@ -158,8 +158,13 @@ class _BlogMainAreaState extends State<BlogMainArea> {
 
   @override
   void initState() {
-    _selectedEntry = blogEntries.first;
+    // _selectedEntry = blogEntries.first;
     super.initState();
+  }
+
+  Future<List<BlogEntry>> _fetchBlogEntries() async {
+    await Future.delayed(const Duration(seconds: 5));
+    return blogEntries;
   }
 
   void _handleSelectedBlogEntry(int blogEntryId) {
@@ -171,28 +176,42 @@ class _BlogMainAreaState extends State<BlogMainArea> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(color: Color(0xFF999999)),
-      child: SingleChildScrollView(
-        child: Column(
-          children: (_selectedEntry != null)
-              ? [
-                  BlogEntryCard(
-                      blogEntry: blogEntries
-                          .firstWhere((b) => b.id == _selectedEntry!.id),
-                      onBackPressed: () {
-                        setState(() {
-                          _selectedEntry = null;
-                        });
-                      }),
-                ]
-              : blogEntries
-                  .map(
-                    (b) => BlogSummaryCard(
-                        blogEntrySummary: b.summary,
-                        onBlogEntrySelected: _handleSelectedBlogEntry),
-                  )
-                  .toList(),
-        ),
+      decoration:
+          const BoxDecoration(color: Color.fromARGB(255, 223, 223, 223)),
+      child: FutureBuilder(
+        future: _fetchBlogEntries(),
+        builder: ((context, snapshot) {
+          if (snapshot.hasData) {
+            return SingleChildScrollView(
+              child: Column(
+                children: (_selectedEntry != null)
+                    ? [
+                        BlogEntryCard(
+                          blogEntry: (snapshot.data as List)
+                              .firstWhere((b) => b.id == _selectedEntry!.id),
+                          onBackPressed: () {
+                            setState(() {
+                              _selectedEntry = null;
+                            });
+                          },
+                        ),
+                      ]
+                    : (snapshot.data as List)
+                        .map(
+                          (b) => BlogSummaryCard(
+                              blogEntrySummary: b.summary,
+                              onBlogEntrySelected: _handleSelectedBlogEntry),
+                        )
+                        .toList(),
+              ),
+            );
+          }
+
+          return SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: const Center(child: Text('pls wait...')),
+          );
+        }),
       ),
     );
   }
