@@ -1,3 +1,5 @@
+import 'package:blog_app/src/pages/blog_main_area.dart';
+import 'package:blog_app/src/pages/blog_side_bar.dart';
 import 'package:flutter/material.dart';
 
 class BlogListPage extends StatefulWidget {
@@ -10,10 +12,20 @@ class BlogListPage extends StatefulWidget {
 class _BlogListPageState extends State<BlogListPage> {
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Hello Blog List Page',
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: const <Widget>[
+        Flexible(
+          flex: 1,
+          fit: FlexFit.tight,
+          child: BlogSideBar(),
+        ),
+        Flexible(
+          flex: 3,
+          fit: FlexFit.tight,
+          child: BlogMainArea(),
+        ),
+      ],
     );
   }
 }

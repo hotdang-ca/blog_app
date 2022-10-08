@@ -8,7 +8,7 @@ class RouteConfig {
       GoRoute(
         path: '/',
         builder: (BuildContext context, GoRouterState state) {
-          return const BlogListPage();
+          return const Material(child: BlogListPage());
         },
       ),
     ],
