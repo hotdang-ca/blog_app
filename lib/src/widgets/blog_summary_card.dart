@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 
 class BlogSummaryCard extends StatelessWidget {
   final BlogEntrySummary blogEntrySummary;
+  final Function onBlogEntrySelected;
 
-  const BlogSummaryCard({required this.blogEntrySummary, Key? key})
+  const BlogSummaryCard(
+      {required this.blogEntrySummary,
+      required this.onBlogEntrySelected,
+      Key? key})
       : super(key: key);
 
   @override
@@ -60,6 +64,7 @@ class BlogSummaryCard extends StatelessWidget {
               onPressed: (() {
                 debugPrint(
                     'Navigator push for blog titled ${blogEntrySummary.title}');
+                onBlogEntrySelected(blogEntrySummary.id);
               }),
               child: const Text('Read more →'),
             )
