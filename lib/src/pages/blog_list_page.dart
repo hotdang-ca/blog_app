@@ -1,5 +1,5 @@
-import 'package:blog_app/src/pages/blog_main_area.dart';
-import 'package:blog_app/src/pages/blog_side_bar.dart';
+import 'package:blog_app/src/widgets/blog_main_area.dart';
+import 'package:blog_app/src/widgets/blog_side_bar.dart';
 import 'package:flutter/material.dart';
 
 class BlogListPage extends StatefulWidget {
@@ -14,8 +14,8 @@ class _BlogListPageState extends State<BlogListPage> {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: const <Widget>[
-        Flexible(
+      children: <Widget>[
+        const Flexible(
           flex: 1,
           fit: FlexFit.tight,
           child: BlogSideBar(),
