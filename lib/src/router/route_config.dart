@@ -15,10 +15,21 @@ class RouteConfig {
         routes: <GoRoute>[
           GoRoute(
             name: 'blogReader',
-            path: 'blog/:id',
+            path: 'blog/:slug',
             builder: (BuildContext context, GoRouterState state) {
-              print('GoRouterState: $state');
-              return const Material(child: BlogReaderView());
+              if (!state.params.containsKey('slug')) {
+                return const Material(child: BlogListPage());
+              }
+
+              final String slugText = state.params['slug']!;
+
+              // pass in the slug, regardless if it exists or not.
+              // Let the blog reader view handle the error.
+              return Material(
+                child: BlogReaderView(
+                  slug: slugText,
+                ),
+              );
             },
           ),
         ],

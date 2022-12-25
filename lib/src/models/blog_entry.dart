@@ -15,6 +15,8 @@ class BlogEntry {
     required this.publishedOn,
   });
 
+  String get slug => title.toLowerCase().replaceAll(' ', '-');
+
   BlogEntrySummary get summary => BlogEntrySummary(
         id: id,
         author: author,
