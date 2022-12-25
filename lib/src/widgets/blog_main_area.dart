@@ -2,6 +2,7 @@ import 'package:blog_app/src/models/blog_entry.dart';
 import 'package:blog_app/src/widgets/blog_entry_card.dart';
 import 'package:blog_app/src/widgets/blog_summary_card.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class BlogMainArea extends StatefulWidget {
   const BlogMainArea({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class _BlogMainAreaState extends State<BlogMainArea> {
       title: "First blog entry",
       author: "James Robert Perih",
       content:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ",
       publishedOn: DateTime.now(),
     ),
     BlogEntry(
@@ -167,10 +168,20 @@ class _BlogMainAreaState extends State<BlogMainArea> {
     return blogEntries;
   }
 
-  void _handleSelectedBlogEntry(int blogEntryId) {
-    setState(() {
-      _selectedEntry = blogEntries.firstWhere((b) => b.id == blogEntryId);
-    });
+  void _handleSelectedBlogEntry({
+    required int blogEntryId,
+    required BuildContext context,
+  }) {
+    final selectedBlogEntry =
+        blogEntries.firstWhere((b) => b.id == blogEntryId);
+    context.goNamed(
+      'blogReader',
+      params: {'id': selectedBlogEntry.id.toString()},
+    );
+
+    // setState(() {
+    //   _selectedEntry = blogEntries.firstWhere((b) => b.id == blogEntryId);
+    // });
   }
 
   @override
@@ -184,23 +195,28 @@ class _BlogMainAreaState extends State<BlogMainArea> {
           if (snapshot.hasData) {
             return SingleChildScrollView(
               child: Column(
-                children: (_selectedEntry != null)
-                    ? [
-                        BlogEntryCard(
-                          blogEntry: (snapshot.data as List)
-                              .firstWhere((b) => b.id == _selectedEntry!.id),
-                          onBackPressed: () {
-                            setState(() {
-                              _selectedEntry = null;
-                            });
-                          },
-                        ),
-                      ]
-                    : (snapshot.data as List)
+                children:
+                    // ? [
+                    //     BlogEntryCard(
+                    //       blogEntry: (snapshot.data as List)
+                    //           .firstWhere((b) => b.id == _selectedEntry!.id),
+                    //       onBackPressed: () {
+                    //         setState(() {
+                    //           _selectedEntry = null;
+                    //         });
+                    //       },
+                    //     ),
+                    //   ]
+                    (snapshot.data as List)
                         .map(
                           (b) => BlogSummaryCard(
-                              blogEntrySummary: b.summary,
-                              onBlogEntrySelected: _handleSelectedBlogEntry),
+                            blogEntrySummary: b.summary,
+                            onBlogEntrySelected: (int blogEntryId) =>
+                                _handleSelectedBlogEntry(
+                              blogEntryId: blogEntryId,
+                              context: context,
+                            ),
+                          ),
                         )
                         .toList(),
               ),

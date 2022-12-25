@@ -5,11 +5,11 @@ class BlogSummaryCard extends StatelessWidget {
   final BlogEntrySummary blogEntrySummary;
   final Function onBlogEntrySelected;
 
-  const BlogSummaryCard(
-      {required this.blogEntrySummary,
-      required this.onBlogEntrySelected,
-      Key? key})
-      : super(key: key);
+  const BlogSummaryCard({
+    required this.blogEntrySummary,
+    required this.onBlogEntrySelected,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
