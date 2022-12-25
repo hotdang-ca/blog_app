@@ -13,11 +13,8 @@ class BlogMainArea extends StatefulWidget {
 }
 
 class _BlogMainAreaState extends State<BlogMainArea> {
-  BlogEntry? _selectedEntry;
-
   @override
   void initState() {
-    // _selectedEntry = blogEntries.first;
     super.initState();
   }
 

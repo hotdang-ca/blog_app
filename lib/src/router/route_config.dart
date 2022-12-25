@@ -16,20 +16,32 @@ class RouteConfig {
           GoRoute(
             name: 'blogReader',
             path: 'blog/:slug',
-            builder: (BuildContext context, GoRouterState state) {
-              if (!state.params.containsKey('slug')) {
-                return const Material(child: BlogListPage());
-              }
-
+            pageBuilder: (BuildContext context, GoRouterState state) {
               final String slugText = state.params['slug']!;
-
+              // if (!state.params.containsKey('slug')) {
+              //   return const Material(child: BlogListPage());
+              // }
               // pass in the slug, regardless if it exists or not.
               // Let the blog reader view handle the error.
-              return Material(
-                child: BlogReaderView(
-                  slug: slugText,
-                ),
-              );
+              return CustomTransitionPage(
+                  key: state.pageKey,
+                  transitionsBuilder: (
+                    context,
+                    animation,
+                    secondaryAnimation,
+                    child,
+                  ) {
+                    return FadeTransition(
+                      opacity: CurveTween(curve: Curves.easeInOutCirc)
+                          .animate(animation),
+                      child: child,
+                    );
+                  },
+                  child: Material(
+                    child: BlogReaderView(
+                      slug: slugText,
+                    ),
+                  ));
             },
           ),
         ],
