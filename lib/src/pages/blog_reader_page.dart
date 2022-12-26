@@ -3,16 +3,18 @@ import 'package:blog_app/src/repositories/blog_entry_repository.dart';
 import 'package:blog_app/src/widgets/blog_entry_card.dart';
 import 'package:blog_app/src/widgets/blog_side_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 
-class BlogReaderView extends StatelessWidget {
+class BlogReaderPage extends StatelessWidget {
   final String slug;
 
-  const BlogReaderView({required this.slug, Key? key}) : super(key: key);
+  const BlogReaderPage({required this.slug, Key? key}) : super(key: key);
 
   Future<BlogEntry> _getBlogEntryWithSlug(String slug) async {
     await Future.delayed(const Duration(seconds: 1));
 
-    BlogEntry? blogEntryWithSlug = BlogEntryRepository.blogEntries.firstWhere(
+    BlogEntry? blogEntryWithSlug =
+        BlogEntryRepository.blogEntries.firstWhereOrNull(
       (b) => b.slug == slug,
     );
 
