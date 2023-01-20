@@ -1,3 +1,4 @@
+import 'package:blog_app/src/pages/blog_author_page.dart';
 import 'package:blog_app/src/pages/blog_list_page.dart';
 import 'package:blog_app/src/pages/blog_reader_page.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +15,18 @@ class RouteConfig {
         },
         routes: <GoRoute>[
           GoRoute(
+            name: 'blogAuthor',
+            path: 'author',
+            builder: (BuildContext context, GoRouterState state) {
+              return const Material(child: BlogAuthorPage());
+            },
+          ),
+          GoRoute(
             name: 'blogReader',
             path: 'blog/:slug',
             pageBuilder: (BuildContext context, GoRouterState state) {
               final String slugText = state.params['slug']!;
-              // if (!state.params.containsKey('slug')) {
-              //   return const Material(child: BlogListPage());
-              // }
+
               // pass in the slug, regardless if it exists or not.
               // Let the blog reader view handle the error.
               return CustomTransitionPage(
