@@ -13,6 +13,8 @@ class BlogMainArea extends StatefulWidget {
 }
 
 class _BlogMainAreaState extends State<BlogMainArea> {
+  BlogEntry? _selectedEntry;
+  
   @override
   void initState() {
     super.initState();
@@ -49,28 +51,19 @@ class _BlogMainAreaState extends State<BlogMainArea> {
 
             return SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: blogEntries.isEmpty
-                    ? <Widget>[
-                        Center(
-                          child: Text(
-                            'No blog entries found',
-                            style: Theme.of(context).textTheme.headlineLarge,
-                          ),
+
+                children: (snapshot.data as List)
+                    .map(
+                      (b) => BlogSummaryCard(
+                        blogEntrySummary: b.summary,
+                        onBlogEntrySelected: (int blogEntryId) =>
+                            _handleSelectedBlogEntry(
+                          blogEntryId: blogEntryId,
+                          context: context,
                         ),
-                      ]
-                    : (snapshot.data as List)
-                        .map(
-                          (b) => BlogSummaryCard(
-                            blogEntrySummary: b.summary,
-                            onBlogEntrySelected: (int blogEntryId) =>
-                                _handleSelectedBlogEntry(
-                              blogEntryId: blogEntryId,
-                              context: context,
-                            ),
-                          ),
-                        )
-                        .toList(),
+                      ),
+                    )
+                    .toList(),
               ),
             );
           }
