@@ -14,10 +14,9 @@ class BlogMainArea extends StatefulWidget {
 
 class _BlogMainAreaState extends State<BlogMainArea> {
   BlogEntry? _selectedEntry;
-
+  
   @override
   void initState() {
-    // _selectedEntry = blogEntries.first;
     super.initState();
   }
 
@@ -41,14 +40,18 @@ class _BlogMainAreaState extends State<BlogMainArea> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: MediaQuery.of(context).size.height,
       decoration:
           const BoxDecoration(color: Color.fromARGB(255, 223, 223, 223)),
       child: FutureBuilder(
         future: _fetchBlogEntries(),
         builder: ((context, snapshot) {
           if (snapshot.hasData) {
+            final blogEntries = snapshot.data as List<BlogEntry>;
+
             return SingleChildScrollView(
               child: Column(
+
                 children: (snapshot.data as List)
                     .map(
                       (b) => BlogSummaryCard(
@@ -67,7 +70,13 @@ class _BlogMainAreaState extends State<BlogMainArea> {
 
           return SizedBox(
             height: MediaQuery.of(context).size.height,
-            child: const Center(child: Text('pls wait...')),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const <Widget>[
+                Center(child: Text('pls wait...')),
+                CircularProgressIndicator(),
+              ],
+            ),
           );
         }),
       ),
